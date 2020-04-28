@@ -1,20 +1,18 @@
 const express = require('express');
 const app = express();
 const PORT  = 5000
+const mongoose = require('mongoose');
+const {MONGO_URI} = require('./keys');
 
-const customMiddleware = (req, res, next)=>{
- console.log('midleware');
- next()
-}
-
-// app.use(customMiddleware)
-
-app.get('/',(req, res)=>{
- res.send('hello world')
+mongoose.connect(MONGO_URI, {
+ useNewUrlParser:true,
+ useUnifiedTopology:true
 })
-
-app.get('/about',customMiddleware,(req, res)=>{
- res.send('about')
+mongoose.connection.on('connected',()=>{
+ console.log('connected to mongo');
+})
+mongoose.connection.on('error',(err)=>{
+ console.log('error connecting to mongo', err);
 })
 
 app.listen(PORT, ()=>{
