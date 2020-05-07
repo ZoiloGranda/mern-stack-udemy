@@ -7,7 +7,7 @@ const Signin = () => {
    <h2>Instaclone</h2>
    <input type="text" placeholder="Email"/>
    <input type="password" placeholder="Password"/>
-   <button className="btn waves-effect waves-light #64b5f6 blue lighten-2">Login
+   <button className="btn waves-effect waves-light  blue darken-1">Login
    </button>
    <h5>
     <Link to="/signup">Don't have an account?</Link>
