@@ -25,6 +25,8 @@ const Signup = () => {
     M.toast({html: data.message, classes: 'green darken-1'})
     history.push('/signin')
    }
+  }).catch(err=>{
+   console.log(err)
   })
  }
 
