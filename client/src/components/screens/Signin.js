@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import M from 'materialize-css';
 
-
 const Signin = () => {
  const history = useHistory();
  const [password, setPassword] = useState('');
