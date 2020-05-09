@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import M from 'materialize-css';
 import {useHistory} from 'react-router-dom'
 
@@ -8,7 +8,28 @@ const CreatePost = () => {
  const [body, setBody] = useState('')
  const [image, setImage] = useState('')
  const [url, setUrl] = useState('')
- 
+ useEffect(() => {
+  if (url) {
+   fetch('/createpost', {
+    method: 'post',
+    headers: {
+     'Content-Type': 'application/json',
+     'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+    },
+    body: JSON.stringify({title, body, pic: url})
+   }).then(res => res.json()).then(data => {
+    if (data.error) {
+     M.toast({html: data.error, classes: 'red darken-3'})
+    } else {
+     M.toast({html: 'Created post successfully', classes: 'green darken-1'})
+     history.push('/')
+    }
+   }).catch(err => {
+    console.log(err)
+   })
+  }
+ }, [url])
+
  const postDetails = () => {
   const data = new FormData();
   data.append('file', image)
@@ -22,23 +43,8 @@ const CreatePost = () => {
   }).catch(err => {
    console.log(err);
   })
-  fetch('/createpost', {
-   method: 'post',
-   headers: {
-    'Content-Type': 'application/json'
-   },
-   body: JSON.stringify({title, body, pic:url})
-  }).then(res => res.json()).then(data => {
-   if (data.error) {
-    M.toast({html: data.error, classes: 'red darken-3'})
-   } else {
-    M.toast({html: 'Created post successfully', classes: 'green darken-1'})
-    history.push('/')
-   }
-  }).catch(err=>{
-   console.log(err)
-  })
  }
+
  return (<div className="card input-field" style={{
    margin: '30px auto',
    maxWidth: '500px',
@@ -56,7 +62,7 @@ const CreatePost = () => {
     <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
    </div>
   </div>
-  <button className="btn waves-effect waves-light blue darken-1" onClick={()=>postDetails()}>Submit Post</button>
+  <button className="btn waves-effect waves-light blue darken-1" onClick={() => postDetails()}>Submit Post</button>
  </div>)
 }
 
