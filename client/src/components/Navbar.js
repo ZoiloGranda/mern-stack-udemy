@@ -29,7 +29,9 @@ const NavBar = () => {
   <div className="nav-wrapper white" style={{
     color: "black"
    }}>
-   <Link to={state?"/":"signin"} className="brand-logo left">Instaclone</Link>
+   <Link to={state
+     ? "/"
+     : "signin"} className="brand-logo left">Instaclone</Link>
    <ul id="nav-mobile" className="right">
     {renderList()}
    </ul>
