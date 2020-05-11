@@ -21,7 +21,6 @@ const Routing = () => {
     type:'USER',
     payload:user
    })
-   history.push('/')
   }else {
    history.push('/signin')
   }
