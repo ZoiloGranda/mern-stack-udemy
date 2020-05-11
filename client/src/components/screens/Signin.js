@@ -5,7 +5,6 @@ import M from 'materialize-css';
 
 const Signin = () => {
  const {state, dispatch} = useContext(UserContext)
- console.log(state);
  const history = useHistory();
  const [password, setPassword] = useState('');
  const [email, setEmail] = useState('');
