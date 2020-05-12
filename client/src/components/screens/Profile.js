@@ -3,7 +3,7 @@ import {UserContext} from '../../App'
 
 const Profile =()=>{
  const [mypics, setPics] = useState([])
- const {state, dispatch} = useContext(UserContext)
+ const {state} = useContext(UserContext)
  useEffect(()=>{
   fetch('/mypost',{
    headers:{
