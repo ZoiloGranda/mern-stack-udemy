@@ -7,12 +7,14 @@ const Profile = () => {
  const [showFollow, setShowFollow] = useState(true)
  const {dispatch} = useContext(UserContext)
  const {userid} = useParams()
+ console.log({userProfile});
  useEffect(() => {
   fetch(`/user/${userid}`, {
    headers: {
     Authorization: 'Bearer ' + localStorage.getItem('jwt')
    }
   }).then(res => res.json()).then(result => {
+   console.log(result);
    setProfile(result)
   })
  }, [])

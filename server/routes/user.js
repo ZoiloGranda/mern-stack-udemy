@@ -15,6 +15,8 @@ router.get('/user/:id',requireLogin, (req, res)=>{
    if(err){
     return res.status(422).json({error:err})
    }
+   console.log({user});
+   console.log({posts});
    res.json({user,posts})
   })
  }).catch(err=>{
@@ -33,7 +35,7 @@ router.put('/follow',requireLogin, (req,res)=>{
   User.findByIdAndUpdate(req.user._id,{
    $push:{following:req.body.followId}
   },{new:true}).select('-password').then(result=>{
-   res.json({result})
+   res.json(result)
   }).catch(err=>{
    return res.status(422).json({error:err})
   })
@@ -51,7 +53,7 @@ router.put('/unfollow',requireLogin, (req,res)=>{
   User.findByIdAndUpdate(req.user._id,{
    $pull:{following:req.body.unfollowId}
   },{new:true}).select('-password').then(result=>{
-   res.json({result})
+   res.json(result)
   }).catch(err=>{
    return res.status(422).json({error:err})
   })

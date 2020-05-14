@@ -4,6 +4,7 @@ import {UserContext} from '../../App'
 const Profile =()=>{
  const [mypics, setPics] = useState([])
  const {state} = useContext(UserContext)
+ console.log({state});
  useEffect(()=>{
   fetch('/mypost',{
    headers:{
@@ -29,9 +30,9 @@ const Profile =()=>{
     <div>
      <h4>{state?state.name:'loading'}</h4>
      <div style={{display:"flex", justifyContent:"space-between", width:"108%"}}>
-      <h6>41 post</h6>
-      <h6>52 followers</h6>
-      <h6>56 following</h6>
+      <h6>{mypics.length} post</h6>
+      <h6>{state? state.followers.length: 'loading'} followers</h6>
+      <h6>{state? state.following.length: 'loading'} following</h6>
      </div>
     </div>
    </div>
