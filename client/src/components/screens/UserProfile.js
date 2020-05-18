@@ -37,7 +37,6 @@ const Profile = () => {
    localStorage.setItem('user', JSON.stringify(data))
    console.log({data});
    setProfile((prevState) => {
-    //user:data.result
     return {
      ...prevState,
      user: {
