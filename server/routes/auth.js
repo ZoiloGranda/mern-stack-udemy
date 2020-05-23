@@ -4,9 +4,16 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET} = require('../config/keys');
+const {JWT_SECRET, SENDGRID_KEY} = require('../config/keys');
 const requireLogin = require('../middleware/requireLogin');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport')
 
+const transporter = nodemailer.createTransport(sendgridTransport({
+ auth:{
+  api_key: SENDGRID_KEY
+ }
+}))
 router.get('/protected',requireLogin, (req, res)=>{
   res.send('hello user')
 })
@@ -29,6 +36,12 @@ router.post('/signup', (req, res) => {
      pic
     })
     user.save().then(user => {
+     transporter.sendMail({
+      to:user.email,
+      from:'zgranda@gmail.com',
+      subject:'Signup succes',
+      html:'<h1>Welcome to Instaclone</h1>'
+     }).then(data=>console.log(data))
      res.json({ message: 'saved successfully' })
     }).catch(err => {
      console.log(err);
