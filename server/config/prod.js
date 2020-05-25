@@ -2,6 +2,6 @@ require('dotenv').config()
 
 module.exports={
  MONGO_URI:process.env.MONGO_URI,
- JWT_SECRET:process.env.JWT_SECRET
+ JWT_SECRET:process.env.JWT_SECRET,
  SENDGRID_KEY:process.env.SENDGRID_KEY
 }
