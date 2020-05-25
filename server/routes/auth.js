@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router()
 const mongoose = require('mongoose');
-const User = mongoose.model('User')
+const User = mongoose.model('User');
+const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET, SENDGRID_KEY} = require('../config/keys');
@@ -74,6 +75,35 @@ router.post('/signin', (req, res)=>{
    }
   }).catch(err=>{
    console.log(err);
+  })
+ })
+})
+
+router.post('/resetpassword', (req, res)=>{
+ crypto.randomBytes(32,(err, buffer)=>{
+  if (err) {
+   return console.log(err);
+  }
+  const token = buffer.toString('hex')
+  User.findOne({email:req.body.email})
+  .then(user=>{
+   if (!user) {
+    return res.status(422).json({error:'User dont exists with that email'})
+   }
+   user.resetToken = token
+   user.expireToken = Date.now()+ 3600000
+   user.save().then((result)=>{
+    transporter.sendMail({
+     to:user.email,
+     from: 'zgranda@gmail.com',
+     subject:'Password reset',
+     html:`
+     <p>You requested a password reset</p>
+     <h5>Click on this <a href="http://localhost:3000/reset/${token}">link</a> to reset</h5>
+     `
+    })
+    res.json({message: 'Check your email'})
+   })
   })
  })
 })
