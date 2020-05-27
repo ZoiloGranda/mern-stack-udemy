@@ -5,7 +5,7 @@ const User = mongoose.model('User');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET, SENDGRID_KEY} = require('../config/keys');
+const {JWT_SECRET, SENDGRID_KEY, RESET_LINK, SENDER_EMAIL} = require('../config/keys');
 const requireLogin = require('../middleware/requireLogin');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport')
@@ -39,7 +39,7 @@ router.post('/signup', (req, res) => {
     user.save().then(user => {
      transporter.sendMail({
       to:user.email,
-      from:'zgranda@gmail.com',
+      from:SENDER_EMAIL,
       subject:'Signup succes',
       html:'<h1>Welcome to Instaclone</h1>'
      }).then(data=>console.log(data))
@@ -95,11 +95,11 @@ router.post('/resetpassword', (req, res)=>{
    user.save().then((result)=>{
     transporter.sendMail({
      to:user.email,
-     from: 'zgranda@gmail.com',
+     from: SENDER_EMAIL,
      subject:'Password reset',
      html:`
      <p>You requested a password reset</p>
-     <h5>Click on this <a href="http://localhost:3000/reset/${token}">link</a> to reset</h5>
+     <h5>Click on this <a href="${RESET_LINK}/reset/${token}">link</a> to reset</h5>
      `
     })
     res.json({message: 'Check your email'})
