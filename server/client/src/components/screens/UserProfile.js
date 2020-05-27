@@ -114,7 +114,7 @@ const Profile = () => {
          width: "108%"
         }}>
         <h6>{userProfile.posts.length}
-         post</h6>
+         &nbsp;post</h6>
         <h6>{userProfile.user.followers.length}
          &nbsp;followers</h6>
         <h6>{userProfile.user.following.length}
