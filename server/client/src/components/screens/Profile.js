@@ -1,5 +1,6 @@
 import React,{useEffect, useState, useContext} from 'react';
 import {UserContext} from '../../App'
+import './Profile.css';
 
 const Profile =()=>{
  const [mypics, setPics] = useState([])
@@ -49,31 +50,24 @@ const Profile =()=>{
   setImage(file)
  }
  return(
-  <div style={{maxWidth:"550px", margin:"0px auto"}}>
-  <div style={{
-   margin:"18px 0px",
-   borderBottom:"1px solid grey"
-  }}>
-
-   <div style={{
-    display: "flex",
-    justifyContent: "space-around"
-   }}>
+  <div className="profile-container">
+  <div className="profile-div">
+   <div className="profile-content">
     <div>
-     <img style={{width:"160px", height:"160px", borderRadius:"80px"}}
+     <img className="profile-pic"
      alt="pic here" src={state?state.pic:'Loading'}/>
     </div>
     <div>
      <h4>{state?state.name:'loading'}</h4>
      <h4>{state?state.email:'loading'}</h4>
-     <div style={{display:"flex", justifyContent:"space-between", width:"108%"}}>
+     <div className="profile-stats">
       <h6>{mypics.length} post</h6>
       <h6>{state? state.followers.length: 'loading'} followers</h6>
       <h6>{state? state.following.length: 'loading'} following</h6>
      </div>
     </div>
    </div>
-   <div className="file-field input-field" style={{margin : "10px"}}>
+   <div className="file-field input-field">
     <div className="btn blue darken-1">
      <span>Update Photo</span>
      <input type="file" multiple="multiple" onChange={(e) => updatePhoto(e.target.files[0])}/>

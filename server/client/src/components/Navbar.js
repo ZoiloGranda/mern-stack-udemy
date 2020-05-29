@@ -1,7 +1,8 @@
-import React, {useContext, useRef, useEffect, useState} from 'react'
-import {Link, useHistory} from 'react-router-dom'
-import {UserContext} from '../App'
+import React, {useContext, useRef, useEffect, useState} from 'react';
+import {Link, useHistory} from 'react-router-dom';
+import {UserContext} from '../App';
 import M from 'materialize-css';
+import './Navbar.css'
 
 const NavBar = () => {
  const searchModal = useRef(null)
@@ -15,7 +16,7 @@ const NavBar = () => {
  const renderList = () => {
   if (state) {
    return [
-    <li key="search"><i data-target="modal1" className="modal-trigger large material-icons" style={{color:'black'}}>search</i></li>,
+    <li key="search"><i data-target="modal1" className="modal-trigger large material-icons">search</i></li>,
     <li key="profile">
      <Link to="/profile">Profile</Link>
     </li>,
@@ -64,9 +65,7 @@ const fetchUsers = (query)=>{
  })
 }
 return (<nav>
- <div className="nav-wrapper white" style={{
-  color: "black"
- }}>
+ <div className="nav-wrapper white">
  <Link to={state
   ? "/"
   : "signin"} className="brand-logo left">Instaclone</Link>

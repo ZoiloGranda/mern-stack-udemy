@@ -1,0 +1,26 @@
+.profile-container{
+ max-width: 550px;
+ margin:0px auto;
+}
+.profile-div{
+ margin:18px 0px;
+ border-bottom: 1px solid grey;
+}
+.profile-content{
+ display: flex;
+ justify-content: space-around;
+}
+.profile-pic{
+ width: 160px;
+ height: 160px;
+ border-radius: 80px;
+}
+.profile-stats{
+ display: flex;
+ justify-content: space-between;
+ width:108%
+}
+
+.file-field.input-field{
+ margin : 10px;
+}

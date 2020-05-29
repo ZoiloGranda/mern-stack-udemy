@@ -1,0 +1,24 @@
+.user-profile-container{
+ max-width: 550px;
+ margin:0px auto;
+}
+.user-profile-div{
+ display: flex;
+ justify-content: space-around;
+ margin: 18px 0px;
+ border-bottom: 1px solid grey;
+}
+.user-profile-pic{
+ width: 160px;
+ height: 160px;
+ border-radius: 80px;
+}
+.user-profile-stats{
+ display: flex;
+ justify-content: space-between;
+ width:108%
+}
+
+.follow-button{
+ margin: 10px;
+}

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import M from 'materialize-css';
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
+import './CreatePost.css'
 
 const CreatePost = () => {
  const history = useHistory();
@@ -45,12 +46,7 @@ const CreatePost = () => {
   })
  }
 
- return (<div className="card input-field" style={{
-   margin: '30px auto',
-   maxWidth: '500px',
-   padding: '20px',
-   textAlign: 'center'
-  }}>
+ return (<div className="card input-field">
   <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
   <input type="text" placeholder="Description" value={body} onChange={(e) => setBody(e.target.value)}/>
   <div className="file-field input-field">

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {UserContext} from '../../App';
 import {Link} from 'react-router-dom';
+import './Home.css'
 
 const Home = () => {
  const [data, setData] = useState([])
@@ -97,16 +98,14 @@ const Home = () => {
   {
    data.map(item => {
     return (<div className="card home-card" key={item._id}>
-     <h5 style={{padding: '5px'}}> <Link to={
+     <h5> <Link to={
       item.postedBy._id!==state._id
       ?'/profile/'+item.postedBy._id
       :'profile'
      }>{item.postedBy.name}
      </Link> 
       {item.postedBy._id===state._id &&
-      <i className="material-icons" style={{
-        float: 'right'
-       }}
+      <i className="material-icons right"
        onClick={()=>deletePost(item._id)}>delete</i>
       }
      </h5>
@@ -114,9 +113,7 @@ const Home = () => {
       <img src={item.photo} alt="wallpaper"/>
      </div>
      <div className="card-content">
-      <i className="material-icons" style={{
-        color: 'red'
-       }}>favorite</i>
+      <i className="material-icons red-icon">favorite</i>
       {
        item.likes.includes(state._id)
         ? <i className="material-icons" onClick={() => {
@@ -133,9 +130,7 @@ const Home = () => {
       {
        item.comments.map(record => {
         return <h6 key={record._id}>
-         <span style={{
-           fontWeight: '500'
-          }}>{record.postedBy.name}&nbsp;</span>{record.text}</h6>
+         <span className="comment-username">{record.postedBy.name}&nbsp;</span>{record.text}</h6>
        })
       }
       <form onSubmit={(e) => {
