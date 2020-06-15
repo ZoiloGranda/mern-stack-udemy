@@ -17,7 +17,7 @@ const Profile =()=>{
    setPics(result.mypost)
   })
  },[])
- useEffect(()=>{
+ const saveImage=()=>{
   if (image) {
    const data = new FormData();
    data.append('file', image)
@@ -45,10 +45,11 @@ const Profile =()=>{
     console.log(err);
    })
   }
- },[image])
+ }
  const updatePhoto=(file)=>{
   setImage(file)
  }
+ useEffect(saveImage,[image])
  return(
   <div className="profile-container">
   <div className="profile-div">

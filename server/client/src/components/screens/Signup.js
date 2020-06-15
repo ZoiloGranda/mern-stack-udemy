@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import M from 'materialize-css';
 
@@ -9,11 +9,6 @@ const Signup = () => {
  const [email, setEmail] = useState('');
  const [image, setImage] = useState('');
  const [url, setUrl] = useState(undefined);
- useEffect(()=>{
-  if(url){
-   uploadFields()
-  }
- },[url])
  const uploadPic =()=>{
   const data = new FormData();
   data.append('file', image)
@@ -53,8 +48,8 @@ const Signup = () => {
   }).catch(err => {
    console.log(err)
   })
-  
  }
+ useEffect(uploadFields,[url])
  const PostData = () => {
   if (image) {
    uploadPic()

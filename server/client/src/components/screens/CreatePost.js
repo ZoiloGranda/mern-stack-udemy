@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import M from 'materialize-css';
 import {useHistory} from 'react-router-dom';
 import './CreatePost.css'
@@ -9,8 +9,7 @@ const CreatePost = () => {
  const [body, setBody] = useState('')
  const [image, setImage] = useState('')
  const [url, setUrl] = useState('')
- useEffect(() => {
-  if (url) {
+ const createPost = () => {
    fetch('/createpost', {
     method: 'post',
     headers: {
@@ -28,9 +27,7 @@ const CreatePost = () => {
    }).catch(err => {
     console.log(err)
    })
-  }
- }, [url])
-
+ }
  const postDetails = () => {
   const data = new FormData();
   data.append('file', image)
@@ -41,6 +38,7 @@ const CreatePost = () => {
    body: data
   }).then(res => res.json()).then(data => {
    setUrl(data.url)
+   createPost()
   }).catch(err => {
    console.log(err);
   })
