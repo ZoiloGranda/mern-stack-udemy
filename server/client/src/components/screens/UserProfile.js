@@ -1,26 +1,23 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {UserContext} from '../../App'
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import './UserProfile.css'
 import FollowButton from './FollowButton';
 
 const UserProfile = () => {
  const [userProfile, setProfile] = useState(null)
- const {state, dispatch} = useContext(UserContext)
  const {userid} = useParams()
- const [showFollow, setShowFollow] = useState(state?!state.following.includes(userid):true)
- console.log({userProfile});
- useEffect(() => {
-  fetch(`/user/${userid}`, {
-   headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('jwt')
-   }
-  }).then(res => res.json()).then(result => {
-   console.log(result);
-   setProfile(result)
-  })
- }, [])
-
+ 
+const getUserProfile=()=>{
+ fetch(`/user/${userid}`, {
+  headers: {
+   Authorization: 'Bearer ' + localStorage.getItem('jwt')
+  }
+ }).then(res => res.json()).then(result => {
+  console.log(result);
+  setProfile(result)
+ })
+}
+useEffect(getUserProfile, [])
  return (<> {
   userProfile
    ? <div className="user-profile-container">
