@@ -14,7 +14,6 @@ const CardContent = (props) => {
    },
    body: JSON.stringify({postId: id})
   }).then(res => res.json()).then(result => {
-   console.log({result});
    setData(result)
   }).catch(err => {
    console.log(err);
@@ -30,7 +29,6 @@ const CardContent = (props) => {
    },
    body: JSON.stringify({postId: id})
   }).then(res => res.json()).then(result => {
-   console.log({result});
    setData(result)
   }).catch(err => {
    console.log(err);
