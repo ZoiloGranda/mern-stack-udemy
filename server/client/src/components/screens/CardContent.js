@@ -5,6 +5,7 @@ import './CardContent.css'
 const CardContent = (props) => {
  const [data, setData] = useState(props.item)
  const {state} = useContext(UserContext)
+ const [showSpinner, setShowSpinner] = useState('inactive')
  const likePost = (id) => {
   fetch('/like', {
    method: 'put',
@@ -35,6 +36,7 @@ const CardContent = (props) => {
   })
  }
  const makeComment = (text, postId) => {
+  setShowSpinner('active')
   fetch('/comment', {
    method: 'put',
    headers: {
@@ -43,8 +45,10 @@ const CardContent = (props) => {
    },
    body: JSON.stringify({postId, text})
   }).then(res => res.json()).then(result => {
+   setShowSpinner('inactive')
    setData(result)
   }).catch(err => {
+   setShowSpinner('inactive')
    console.log(err);
   })
  }
@@ -70,12 +74,28 @@ const CardContent = (props) => {
        <span className="comment-username">{record.postedBy.name}&nbsp;</span>{record.text}</h6>
       })
      }
+     <div className="row">
      <form onSubmit={(e) => {
-      e.preventDefault()
-      makeComment(e.target[0].value, data._id)
+      e.preventDefault();
+      makeComment(e.target[0].value, data._id);
+      e.target[0].value='';
      }}>
-     <input type="text" placeholder="Add a comment"/>
+     <input className="col s10" type="text" placeholder="Add a comment, press Enter to send"/>
+     <div className="s2">
+     <div className={`preloader-wrapper small ${showSpinner}`}>
+       <div className="spinner-layer spinner-blue-only">
+         <div className="circle-clipper left">
+           <div className="circle"></div>
+         </div><div className="gap-patch">
+           <div className="circle"></div>
+         </div><div className="circle-clipper right">
+           <div className="circle"></div>
+         </div>
+       </div>
+     </div>
+    </div>
     </form>
+    </div>
    </div>)
   }
   
