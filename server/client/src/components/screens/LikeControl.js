@@ -46,7 +46,7 @@ const LikeControl = (props) => {
   }
   <h6>
    {data.likes.length}
-   likes</h6>
+   &nbsp;likes</h6>
  </React.Fragment>)
 }
 
