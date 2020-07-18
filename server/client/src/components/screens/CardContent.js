@@ -1,40 +1,11 @@
-import React, {useState, useContext} from 'react';
-import {UserContext} from '../../App';
+import React, {useState} from 'react';
 import './CardContent.css'
+import LikeControl from './LikeControl';
 
 const CardContent = (props) => {
  const [data, setData] = useState(props.item)
- const {state} = useContext(UserContext)
  const [showSpinner, setShowSpinner] = useState('inactive')
- const likePost = (id) => {
-  fetch('/like', {
-   method: 'put',
-   headers: {
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + localStorage.getItem('jwt')
-   },
-   body: JSON.stringify({postId: id})
-  }).then(res => res.json()).then(result => {
-   setData(result)
-  }).catch(err => {
-   console.log(err);
-  })
- }
  
- const unlikePost = (id) => {
-  fetch('/unlike', {
-   method: 'put',
-   headers: {
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + localStorage.getItem('jwt')
-   },
-   body: JSON.stringify({postId: id})
-  }).then(res => res.json()).then(result => {
-   setData(result)
-  }).catch(err => {
-   console.log(err);
-  })
- }
  const makeComment = (text, postId) => {
   setShowSpinner('active')
   fetch('/comment', {
@@ -55,17 +26,7 @@ const CardContent = (props) => {
  
  return(
   <div className="card-content">
-   {
-    data.likes.includes(state._id)
-    ? <i className="material-icons" onClick={() => {
-     unlikePost(data._id)
-    }}>thumb_down</i>
-    : <i className="material-icons" onClick={() => {
-     likePost(data._id)
-    }}>thumb_up</i>
-   }
-   <h6>{data.likes.length}
-    &nbsp;likes</h6>
+   <LikeControl data={data}/>
     <h6>{data.title}</h6>
     <p>{data.body}</p>
     {
