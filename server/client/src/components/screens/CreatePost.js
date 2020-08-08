@@ -8,7 +8,6 @@ const CreatePost = () => {
  const [title, setTitle] = useState('')
  const [body, setBody] = useState('')
  const [image, setImage] = useState('')
- const [url, setUrl] = useState('')
  const [showSpinner, setShowSpinner] = useState('inactive')
  const [hideSubmitBtn, setHideSubmitBtn] = useState('')
  const createPost = ({pic}) => {
@@ -43,7 +42,6 @@ const CreatePost = () => {
    method: 'post',
    body: data
   }).then(res => res.json()).then(data => {
-   setUrl(data.url)
    createPost({pic:data.url})
   }).catch(err => {
    console.log(err);
