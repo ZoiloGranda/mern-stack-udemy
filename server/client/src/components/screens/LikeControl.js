@@ -3,9 +3,11 @@ import {UserContext} from '../../App';
 
 const LikeControl = (props) => {
  const [data, setData] = useState(props.data)
+ const [showSpinner, setShowSpinner] = useState('inactive')
  const {state} = useContext(UserContext)
 
  const likePost = (id) => {
+  setShowSpinner('active')
   fetch('/like', {
    method: 'put',
    headers: {
@@ -14,6 +16,7 @@ const LikeControl = (props) => {
    },
    body: JSON.stringify({postId: id})
   }).then(res => res.json()).then(result => {
+   setShowSpinner('inactive')
    setData(result)
   }).catch(err => {
    console.log(err);
@@ -21,6 +24,7 @@ const LikeControl = (props) => {
  }
 
  const unlikePost = (id) => {
+  setShowSpinner('active')
   fetch('/unlike', {
    method: 'put',
    headers: {
@@ -29,6 +33,7 @@ const LikeControl = (props) => {
    },
    body: JSON.stringify({postId: id})
   }).then(res => res.json()).then(result => {
+   setShowSpinner('inactive')
    setData(result)
   }).catch(err => {
    console.log(err);
@@ -44,6 +49,19 @@ const LikeControl = (props) => {
        likePost(data._id)
       }}>thumb_up</i>
   }
+  <div className={`preloader-wrapper small ${showSpinner}`}>
+   <div className="spinner-layer spinner-green-only">
+    <div className="circle-clipper left">
+     <div className="circle"></div>
+    </div>
+    <div className="gap-patch">
+     <div className="circle"></div>
+    </div>
+    <div className="circle-clipper right">
+     <div className="circle"></div>
+    </div>
+   </div>
+  </div>
   <h6>
    {data.likes.length}
    &nbsp;likes</h6>
