@@ -11,14 +11,14 @@ const CreatePost = () => {
  const [url, setUrl] = useState('')
  const [showSpinner, setShowSpinner] = useState('inactive')
  const [hideSubmitBtn, setHideSubmitBtn] = useState('')
- const createPost = () => {
+ const createPost = ({pic}) => {
   fetch('/createpost', {
    method: 'post',
    headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('jwt')
    },
-   body: JSON.stringify({title, body, pic: url})
+   body: JSON.stringify({title, body, pic})
   }).then(res => res.json()).then(data => {
    setHideSubmitBtn('')
    setShowSpinner('inactive')
@@ -44,7 +44,7 @@ const CreatePost = () => {
    body: data
   }).then(res => res.json()).then(data => {
    setUrl(data.url)
-   createPost()
+   createPost({pic:data.url})
   }).catch(err => {
    console.log(err);
   })
