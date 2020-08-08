@@ -9,26 +9,32 @@ const CreatePost = () => {
  const [body, setBody] = useState('')
  const [image, setImage] = useState('')
  const [url, setUrl] = useState('')
+ const [showSpinner, setShowSpinner] = useState('inactive')
+ const [hideSubmitBtn, setHideSubmitBtn] = useState('')
  const createPost = () => {
-   fetch('/createpost', {
-    method: 'post',
-    headers: {
-     'Content-Type': 'application/json',
-     'Authorization': 'Bearer ' + localStorage.getItem('jwt')
-    },
-    body: JSON.stringify({title, body, pic: url})
-   }).then(res => res.json()).then(data => {
-    if (data.error) {
-     M.toast({html: data.error, classes: 'red darken-3'})
-    } else {
-     M.toast({html: 'Created post successfully', classes: 'green darken-1'})
-     history.push('/')
-    }
-   }).catch(err => {
-    console.log(err)
-   })
+  fetch('/createpost', {
+   method: 'post',
+   headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+   },
+   body: JSON.stringify({title, body, pic: url})
+  }).then(res => res.json()).then(data => {
+   setHideSubmitBtn('')
+   setShowSpinner('inactive')
+   if (data.error) {
+    M.toast({html: data.error, classes: 'red darken-3'})
+   } else {
+    M.toast({html: 'Created post successfully', classes: 'green darken-1'})
+    history.push('/')
+   }
+  }).catch(err => {
+   console.log(err)
+  })
  }
  const postDetails = () => {
+  setHideSubmitBtn('hide')
+  setShowSpinner('active')
   const data = new FormData();
   data.append('file', image)
   data.append('upload_preset', 'instaclone')
@@ -43,7 +49,7 @@ const CreatePost = () => {
    console.log(err);
   })
  }
-
+ 
  return (<div className="card input-field">
   <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
   <input type="text" placeholder="Description" value={body} onChange={(e) => setBody(e.target.value)}/>
@@ -56,7 +62,21 @@ const CreatePost = () => {
     <input className="file-path validate" type="text" placeholder="Upload one or more files"/>
    </div>
   </div>
-  <button className="btn waves-effect waves-light blue darken-1" onClick={() => postDetails()}>Submit Post</button>
+  <button className={`btn waves-effect waves-light blue darken-1 ${hideSubmitBtn}`} onClick={() => postDetails()}>Submit Post
+  </button>
+  <div className={`preloader-wrapper small ${showSpinner}`}>
+   <div className="spinner-layer spinner-green-only">
+    <div className="circle-clipper left">
+     <div className="circle"></div>
+    </div>
+    <div className="gap-patch">
+     <div className="circle"></div>
+    </div>
+    <div className="circle-clipper right">
+     <div className="circle"></div>
+    </div>
+   </div>
+  </div>
  </div>)
 }
 
