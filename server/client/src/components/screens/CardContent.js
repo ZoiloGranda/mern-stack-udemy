@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import './CardContent.css'
 import LikeControl from './LikeControl';
+import {UserContext} from '../../App'
 
 const CardContent = (props) => {
+ const {state, dispatch} = useContext(UserContext);
  const [data, setData] = useState(props.item)
  const [showSpinner, setShowSpinner] = useState('inactive')
  
@@ -24,6 +26,24 @@ const CardContent = (props) => {
   })
  }
  
+ const deleteComment = (commentId) => {
+  console.log({commentId: commentId, postId: data._id});
+  setShowSpinner('active')
+  fetch('/deletecomment', {
+   method: 'delete',
+   headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + localStorage.getItem('jwt')
+   },
+   body: JSON.stringify({commentId: commentId, postId: data._id})
+  }).then(res => res.json()).then(result => {
+   setShowSpinner('inactive')
+   //setData(result)
+  }).catch(err => {
+   console.log(err);
+  })
+ }
+ 
  return(
   <div className="card-content">
    <LikeControl data={data}/>
@@ -32,7 +52,11 @@ const CardContent = (props) => {
     {
      data.comments.map(record => {
       return <h6 key={record._id}>
-       <span className="comment-username">{record.postedBy.name}&nbsp;</span>{record.text}</h6>
+       <span className="comment-username">{record.postedBy.name}&nbsp;</span>{record.text}
+       <i onClick={() => {
+          deleteComment(record._id)
+         }} className={`material-icons right x-small ${record.postedBy._id===state._id?'':'hide'}`}>delete</i>
+       </h6>
       })
      }
      <div className="row">
