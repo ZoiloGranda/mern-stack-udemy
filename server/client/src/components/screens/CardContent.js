@@ -7,7 +7,7 @@ const CardContent = (props) => {
  const {state, dispatch} = useContext(UserContext);
  const [data, setData] = useState(props.item)
  const [showSpinner, setShowSpinner] = useState('inactive')
- 
+
  const makeComment = (text, postId) => {
   setShowSpinner('active')
   fetch('/comment', {
@@ -25,7 +25,7 @@ const CardContent = (props) => {
    console.log(err);
   })
  }
- 
+
  const deleteComment = (commentId) => {
   console.log({commentId: commentId, postId: data._id});
   setShowSpinner('active')
@@ -43,45 +43,73 @@ const CardContent = (props) => {
    console.log(err);
   })
  }
- 
- return(
-  <div className="card-content">
-   <LikeControl data={data}/>
-    <h6>{data.title}</h6>
-    <p>{data.body}</p>
-    {
-     data.comments.map(record => {
-      return <h6 key={record._id}>
-       <span className="comment-username">{record.postedBy.name}&nbsp;</span>{record.text}
-       <i onClick={() => {
-          deleteComment(record._id)
-         }} className={`material-icons right x-small ${record.postedBy._id===state._id?'':'hide'}`}>delete</i>
-       </h6>
-      })
-     }
+
+ return (<div className="card-content">
+  <LikeControl data={data}/>
+  <h6>{data.title}</h6>
+  <p>{data.body}</p>
+  {
+   data.comments.map(record => {
+    return <div className="container" key={record._id}>
      <div className="row">
-     <form onSubmit={(e) => {
-      e.preventDefault();
-      makeComment(e.target[0].value, data._id);
-      e.target[0].value='';
-     }}>
-     <input className="col s10" type="text" placeholder="Add a comment, press Enter to send"/>
-     <div className="s2">
-     <div className={`preloader-wrapper small ${showSpinner}`}>
-       <div className="spinner-layer spinner-blue-only">
+      <div className="col s4">
+       <span className="comment-username">{record.postedBy.name}&nbsp;</span>
+      </div>
+      <div className="col s6">
+       {record.text}
+      </div>
+      <div className="col s1">
+       <i onClick={() => {
+         deleteComment(record._id)
+        }} className={`material-icons right x-small ${record.postedBy._id === state._id
+         ? ''
+         : 'hide'}`}>delete</i>
+      </div>
+      <div className="col s1">
+       <div className={`preloader-wrapper small active right ${showSpinner}`}>
+        <div className="spinner-layer spinner-blue-only">
          <div className="circle-clipper left">
-           <div className="circle"></div>
-         </div><div className="gap-patch">
-           <div className="circle"></div>
-         </div><div className="circle-clipper right">
-           <div className="circle"></div>
+          <div className="circle"></div>
          </div>
+         <div className="gap-patch">
+          <div className="circle"></div>
+         </div>
+         <div className="circle-clipper right">
+          <div className="circle"></div>
+         </div>
+        </div>
        </div>
+      </div>
+
      </div>
     </div>
-    </form>
-    </div>
-   </div>)
+   })
   }
-  
-  export default CardContent
+  <div className="row">
+   <form onSubmit={(e) => {
+     e.preventDefault();
+     makeComment(e.target[0].value, data._id);
+     e.target[0].value = '';
+    }}>
+    <input className="col s10" type="text" placeholder="Add a comment, press Enter to send"/>
+    <div className="s2">
+     <div className={`preloader-wrapper small ${showSpinner}`}>
+      <div className="spinner-layer spinner-blue-only">
+       <div className="circle-clipper left">
+        <div className="circle"></div>
+       </div>
+       <div className="gap-patch">
+        <div className="circle"></div>
+       </div>
+       <div className="circle-clipper right">
+        <div className="circle"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </form>
+  </div>
+ </div>)
+}
+
+export default CardContent
