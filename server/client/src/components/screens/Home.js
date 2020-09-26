@@ -7,6 +7,7 @@ import './Home.css'
 const Home = () => {
  const [data, setData] = useState([])
  const [showSpinner, setShowSpinner] = useState('inactive')
+ const [showDeletePostSpinner, setShowDeletePostSpinner] = useState('inactive')
  const {state} = useContext(UserContext)
  useEffect(() => {
   setShowSpinner('active')
@@ -21,12 +22,14 @@ const Home = () => {
  }, [])
 
  const deletePost = (postId) => {
+  setShowDeletePostSpinner('active')
   fetch(`/deletepost/${postId}`, {
    method: 'delete',
    headers: {
     Authorization: 'Bearer ' + localStorage.getItem('jwt')
    }
   }).then(res => res.json()).then(result => {
+   setShowDeletePostSpinner('inactive')
    const newData = data.filter(item => {
     return item._id !== result._id
    })
@@ -61,6 +64,19 @@ const Home = () => {
          : 'profile'}>{item.postedBy.name}
        </Link>
        {item.postedBy._id === state._id && <i className="material-icons right" onClick={() => deletePost(item._id)}>delete</i>}
+       <div className={`preloader-wrapper small right ${showDeletePostSpinner}`}>
+        <div className="spinner-layer spinner-green-only">
+         <div className="circle-clipper left">
+          <div className="circle"></div>
+         </div>
+         <div className="gap-patch">
+          <div className="circle"></div>
+         </div>
+         <div className="circle-clipper right">
+          <div className="circle"></div>
+         </div>
+        </div>
+       </div>
       </h5>
       <div className="card-image">
        <img src={item.photo} alt="wallpaper"/>
