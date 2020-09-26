@@ -38,7 +38,7 @@ const CardContent = (props) => {
    body: JSON.stringify({commentId: commentId, postId: data._id})
   }).then(res => res.json()).then(result => {
    setShowSpinner('inactive')
-   //setData(result)
+   setData(result)
   }).catch(err => {
    console.log(err);
   })
