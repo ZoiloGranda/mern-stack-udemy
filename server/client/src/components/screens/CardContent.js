@@ -50,12 +50,12 @@ const CardContent = (props) => {
   <p>{data.body}</p>
   {
    data.comments.map(record => {
-    return <div className="container" key={record._id}>
-     <div className="row">
-      <div className="col s4">
+    return <div key={record._id}>
+     <div className="row mb-none">
+      <div className="col s3">
        <span className="comment-username">{record.postedBy.name}&nbsp;</span>
       </div>
-      <div className="col s6">
+      <div className="col s7">
        {record.text}
       </div>
       <div className="col s1">
@@ -66,7 +66,7 @@ const CardContent = (props) => {
          : 'hide'}`}>delete</i>
       </div>
       <div className="col s1">
-       <div className={`preloader-wrapper small active right ${showSpinner}`}>
+       <div className={`preloader-wrapper small right ${showSpinner}`}>
         <div className="spinner-layer spinner-blue-only">
          <div className="circle-clipper left">
           <div className="circle"></div>
