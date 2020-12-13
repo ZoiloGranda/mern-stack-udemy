@@ -2,7 +2,6 @@ import React, {
  useState,
  useContext
 } from 'react';
-import './CardComments.css'
 import {
  UserContext
 } from '../../App'
