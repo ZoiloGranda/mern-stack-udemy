@@ -8,15 +8,10 @@ import {
 
 const CardComments = (props) => {
  const { state, dispatch } = useContext(UserContext);
- console.log({props});
  const [data, setData] = useState(props.comment)
  const [showSpinner, setShowSpinner] = useState('inactive')
 
  const deleteComment = (commentId) => {
-  console.log({
-   commentId: commentId,
-   postId: props.postId
-  });
   setShowSpinner('active')
   fetch('/deletecomment', {
    method: 'delete',
@@ -30,7 +25,6 @@ const CardComments = (props) => {
    })
   }).then(res => res.json()).then(result => {
    setShowSpinner('inactive')
-   console.log({result});
    setData(result)
   }).catch(err => {
    console.log(err);

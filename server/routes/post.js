@@ -100,7 +100,6 @@ router.put('/comment', requireLogin, (req, res) => {
   text: req.body.text,
   postedBy: req.user._id
  }
- console.log(comment);
  Post.findByIdAndUpdate(req.body.postId, {
    $push: { comments: comment }
   }, {
@@ -118,7 +117,6 @@ router.put('/comment', requireLogin, (req, res) => {
 })
 
 router.delete('/deletecomment', requireLogin, (req, res) => {
- console.log(req.body);
  Post.findByIdAndUpdate(req.body.postId, {
    $pull: { comments: { _id: req.body.commentId } }
   }, {
@@ -130,7 +128,6 @@ router.delete('/deletecomment', requireLogin, (req, res) => {
     console.log(err);
     return res.status(422).json({ error: err })
    } else {
-    console.log(result);
     res.json(result)
    }
   })
