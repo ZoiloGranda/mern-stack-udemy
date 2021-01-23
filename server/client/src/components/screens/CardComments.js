@@ -7,7 +7,7 @@ import {
 } from '../../App'
 
 const CardComments = (props) => {
- const { state, dispatch } = useContext(UserContext);
+ const { state } = useContext(UserContext);
  const [data, setData] = useState(props.comment)
  const [showSpinner, setShowSpinner] = useState('inactive')
 
@@ -25,6 +25,7 @@ const CardComments = (props) => {
    })
   }).then(res => res.json()).then(result => {
    setShowSpinner('inactive')
+   console.log({result});
    setData(result)
   }).catch(err => {
    console.log(err);

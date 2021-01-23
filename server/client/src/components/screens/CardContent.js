@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './CardContent.css'
 import LikeControl from './LikeControl';
-import { UserContext } from '../../App'
 import CardComments from './CardComments';
 
 const CardContent = (props) => {
-  const { state, dispatch } = useContext(UserContext);
   const [data, setData] = useState(props.item)
   const [showSpinner, setShowSpinner] = useState('inactive')
 
@@ -33,7 +31,6 @@ const CardContent = (props) => {
     <p>{data.body}</p>
     {
       data.comments.map(comment => {
-        console.log(comment);
         return <CardComments comment={comment} postId={data._id}/>
       })
     }
