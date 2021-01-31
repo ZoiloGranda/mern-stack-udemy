@@ -8,5 +8,6 @@
 
 1. Execute `npm install` on **server** folder
 2. Execute `npm install` on **server/client** folder
-3. `npm start` on **server** folder
-4. `npm start` on **server/client** folder
+3. Create **.env** based on **.env-example**
+4. `npm start` on **server** folder
+5. `npm start` on **server/client** folder
