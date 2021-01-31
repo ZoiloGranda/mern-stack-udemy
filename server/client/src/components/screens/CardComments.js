@@ -5,11 +5,13 @@ import React, {
 import {
  UserContext
 } from '../../App'
+import Spinner from './Spinner';
 
 const CardComments = (props) => {
  const { state } = useContext(UserContext);
  const [data, setData] = useState(props.comment)
  const [showSpinner, setShowSpinner] = useState('inactive')
+
 
  const deleteComment = (commentId) => {
   setShowSpinner('active')
@@ -25,7 +27,7 @@ const CardComments = (props) => {
    })
   }).then(res => res.json()).then(result => {
    setShowSpinner('inactive')
-   console.log({result});
+   console.log({ result });
    setData(result)
   }).catch(err => {
    console.log(err);
@@ -48,21 +50,8 @@ const CardComments = (props) => {
      : 'hide'}`}>delete</i>
    </div>
    <div className="col s1">
-    <div className={`preloader-wrapper small right ${showSpinner}`}>
-     <div className="spinner-layer spinner-blue-only">
-      <div className="circle-clipper left">
-       <div className="circle"></div>
-      </div>
-      <div className="gap-patch">
-       <div className="circle"></div>
-      </div>
-      <div className="circle-clipper right">
-       <div className="circle"></div>
-      </div>
-     </div>
-    </div>
+    <Spinner spinnerState={showSpinner} spinnerSize="small"/>
    </div>
-
   </div>
  </div>)
 }

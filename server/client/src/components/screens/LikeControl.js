@@ -1,10 +1,11 @@
-import React, {useState, useContext} from 'react';
-import {UserContext} from '../../App';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../App';
+import Spinner from './Spinner';
 
 const LikeControl = (props) => {
  const [data, setData] = useState(props.data)
  const [showSpinner, setShowSpinner] = useState('inactive')
- const {state} = useContext(UserContext)
+ const { state } = useContext(UserContext)
 
  const likePost = (id) => {
   setShowSpinner('active')
@@ -14,7 +15,7 @@ const LikeControl = (props) => {
     'Content-Type': 'application/json',
     Authorization: 'Bearer ' + localStorage.getItem('jwt')
    },
-   body: JSON.stringify({postId: id})
+   body: JSON.stringify({ postId: id })
   }).then(res => res.json()).then(result => {
    setShowSpinner('inactive')
    setData(result)
@@ -31,7 +32,7 @@ const LikeControl = (props) => {
     'Content-Type': 'application/json',
     Authorization: 'Bearer ' + localStorage.getItem('jwt')
    },
-   body: JSON.stringify({postId: id})
+   body: JSON.stringify({ postId: id })
   }).then(res => res.json()).then(result => {
    setShowSpinner('inactive')
    setData(result)
@@ -43,25 +44,13 @@ const LikeControl = (props) => {
   {
    data.likes.includes(state._id)
     ? <i className="material-icons" onClick={() => {
-       unlikePost(data._id)
-      }}>thumb_down</i>
+     unlikePost(data._id)
+    }}>thumb_down</i>
     : <i className="material-icons" onClick={() => {
-       likePost(data._id)
-      }}>thumb_up</i>
+     likePost(data._id)
+    }}>thumb_up</i>
   }
-  <div className={`preloader-wrapper small ${showSpinner}`}>
-   <div className="spinner-layer spinner-green-only">
-    <div className="circle-clipper left">
-     <div className="circle"></div>
-    </div>
-    <div className="gap-patch">
-     <div className="circle"></div>
-    </div>
-    <div className="circle-clipper right">
-     <div className="circle"></div>
-    </div>
-   </div>
-  </div>
+  <Spinner spinnerSize="small" spinnerState={showSpinner} />
   <h6>
    {data.likes.length}
    &nbsp;likes</h6>

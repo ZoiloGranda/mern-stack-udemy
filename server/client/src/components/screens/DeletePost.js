@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
+import Spinner from './Spinner';
 
 const DeletePost = (props) => {
  const [postId] = useState(props.postId)
@@ -31,19 +32,7 @@ const DeletePost = (props) => {
 
  return (<React.Fragment>
   <i className={`material-icons right ${showDeletePostIcon}`} onClick={() => deletePost()}>delete</i>
-  <div className={`preloader-wrapper small right ${showDeletePostSpinner}`}>
-   <div className="spinner-layer spinner-green-only">
-    <div className="circle-clipper left">
-     <div className="circle"></div>
-    </div>
-    <div className="gap-patch">
-     <div className="circle"></div>
-    </div>
-    <div className="circle-clipper right">
-     <div className="circle"></div>
-    </div>
-   </div>
-  </div>
+  <Spinner spinnerState={showDeletePostSpinner} spinnerSize="small"/>
  </React.Fragment>)
 }
 export default DeletePost

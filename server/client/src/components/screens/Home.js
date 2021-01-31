@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import CardContent from './CardContent';
 import DeletePost from './DeletePost';
 import './Home.css'
+import Spinner from './Spinner';
 
 const Home = () => {
  const [data, setData] = useState([])
@@ -32,19 +33,7 @@ const Home = () => {
    showSpinner === 'active'
     ? <div className="container spinner-container">
      <div className="col s12">
-      <div className={`preloader-wrapper big ${showSpinner}`}>
-       <div className="spinner-layer spinner-blue-only">
-        <div className="circle-clipper left">
-         <div className="circle"></div>
-        </div>
-        <div className="gap-patch">
-         <div className="circle"></div>
-        </div>
-        <div className="circle-clipper right">
-         <div className="circle"></div>
-        </div>
-       </div>
-      </div>
+      <Spinner spinnerState={showSpinner} spinnerSize="big"/>
      </div>
     </div>
     : data.map(item => {
