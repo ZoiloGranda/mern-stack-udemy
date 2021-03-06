@@ -8,6 +8,10 @@ const CardContent = (props) => {
  const [data, setData] = useState(props.item)
  const [showSpinner, setShowSpinner] = useState('inactive')
 
+ const commentDeleted = (result) => {
+  setData(result)
+ }
+
  const makeComment = (text, postId) => {
   setShowSpinner('active')
   fetch('/comment', {
@@ -32,7 +36,7 @@ const CardContent = (props) => {
   <p>{data.body}</p>
   {
    data.comments.map(comment => {
-    return <CardComments comment={comment} postId={data._id} />
+    return <CardComments comment={comment} postId={data._id} onDeleteComment={commentDeleted} />
    })
   }
   <div className="row">
@@ -43,7 +47,7 @@ const CardContent = (props) => {
    }}>
     <input className="col s10" type="text" placeholder="Add a comment, press Enter to send" />
     <div className="s2">
-     <Spinner spinnerState={showSpinner} spinnerSize="small"/>
+     <Spinner spinnerState={showSpinner} spinnerSize="small" />
     </div>
    </form>
   </div>

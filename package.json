@@ -4,7 +4,6 @@
  "description": "",
  "main": "index.js",
  "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
   "build": "cd server/client && npm install && npm run build && cd .. && npm install ",
   "start": "cd server && node app.js",
   "dev": "cd server/client && npm start"
