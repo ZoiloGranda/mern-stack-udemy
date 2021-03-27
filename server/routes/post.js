@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const requireLogin = require('../middleware/requireLogin');
 const Post = mongoose.model('Post')
 const fetch = require('node-fetch');
-const {CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET} = require('../config/keys');
+const { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET } = require('../config/keys');
 
 router.get('/allpost', requireLogin, (req, res) => {
  Post.find()
@@ -45,8 +45,8 @@ router.post('/createpost', requireLogin, (req, res) => {
   postedBy: req.user
  })
  post.save().then(result => {
-   res.json({ post: result })
-  })
+  res.json({ post: result })
+ })
   .catch(err => {
    console.log(err)
   })
@@ -65,10 +65,10 @@ router.get('/mypost', requireLogin, (req, res) => {
 
 router.put('/like', requireLogin, (req, res) => {
  Post.findByIdAndUpdate(req.body.postId, {
-   $push: { likes: req.user._id }
-  }, {
-   new: true
-  })
+  $push: { likes: req.user._id }
+ }, {
+  new: true
+ })
   .populate('comments.postedBy', '_id name')
   .exec((err, result) => {
    if (err) {
@@ -81,10 +81,10 @@ router.put('/like', requireLogin, (req, res) => {
 
 router.put('/unlike', requireLogin, (req, res) => {
  Post.findByIdAndUpdate(req.body.postId, {
-   $pull: { likes: req.user._id }
-  }, {
-   new: true
-  })
+  $pull: { likes: req.user._id }
+ }, {
+  new: true
+ })
   .populate('comments.postedBy', '_id name')
   .exec((err, result) => {
    if (err) {
@@ -101,10 +101,10 @@ router.put('/comment', requireLogin, (req, res) => {
   postedBy: req.user._id
  }
  Post.findByIdAndUpdate(req.body.postId, {
-   $push: { comments: comment }
-  }, {
-   new: true
-  })
+  $push: { comments: comment }
+ }, {
+  new: true
+ })
   .populate('comments.postedBy', '_id name')
   .populate('postedBy', '_id name')
   .exec((err, result) => {
@@ -118,10 +118,10 @@ router.put('/comment', requireLogin, (req, res) => {
 
 router.delete('/deletecomment', requireLogin, (req, res) => {
  Post.findByIdAndUpdate(req.body.postId, {
-   $pull: { comments: { _id: req.body.commentId } }
-  }, {
-   new: true
-  })
+  $pull: { comments: { _id: req.body.commentId } }
+ }, {
+  new: true
+ })
   .populate('comments.postedBy', '_id name')
   .exec((err, result) => {
    if (err) {
@@ -141,7 +141,7 @@ router.delete('/deletepost/:postId', requireLogin, async (req, res) => {
     return res.status(422).json({ error: err })
    }
    if (post.postedBy._id.toString() === req.user._id.toString()) {
-    await removePhoto(post.photo.split("/").pop())
+    await removePhoto(post.photo.split('/').pop())
     post.remove()
      .then(result => {
       res.json(result)
@@ -157,10 +157,10 @@ function removePhoto(photoName) {
  return fetch(`https://${CLOUD_API_KEY}:${CLOUD_API_SECRET}@api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/image/upload`, {
   body: `public_ids[]=${photoId}`,
   headers: {
-   "Content-Type": "application/x-www-form-urlencoded"
+   'Content-Type': 'application/x-www-form-urlencoded'
   },
-  method: "DELETE"
- }).then(result=> result.json())
+  method: 'DELETE'
+ }).then(result => result.json())
 }
 
 module.exports = router

@@ -50,7 +50,7 @@ useEffect(getUserProfile, [])
     </div>
 
    : <h2>Loading...</h2>
- } < />
+ } </>
  )
 }
 
